@@ -1,45 +1,42 @@
 node-libxml-xsd
 ===============
 
-[![Build status](https://travis-ci.org/albanm/node-libxml-xsd.svg)](https://travis-ci.org/albanm/node-libxml-xsd)
-[![Code Climate](https://codeclimate.com/github/albanm/node-libxml-xsd/badges/gpa.svg)](https://codeclimate.com/github/albanm/node-libxml-xsd)
-[![NPM version](https://badge.fury.io/js/libxml-xsd.svg)](http://badge.fury.io/js/libxml-xsd)
+[![NPM version](https://badge.fury.io/js/libxmljs2-xsd.svg)](http://badge.fury.io/js/libxmljs2-xsd)
 
-*XSD validation for node.js using [libxml](http://xmlsoft.org/)*
+*XSD validation for node.js 14.x using [libxml](http://xmlsoft.org/) via [libxmljs2](https://github.com/marudor/libxmljs2)*
 
 Installation
 ------------
 
-	npm install libxml-xsd
+	npm install libxmljs2-xsd
 
 On windows there are several prerequisites that need to be met before an install will work.
 [Windows-Build-Tools](https://github.com/felixrieseberg/windows-build-tools) is a great helper module for this task.
 
     npm install --global --production windows-build-tools
-    npm install libxml-xsd
+    npm install libxmljs2-xsd
 
 Basic usage
 -----------
 
 ```js
-var xsd = require('libxml-xsd');
-
-xsd.parseFile(schemaPath, function(err, schema){
-  schema.validate(documentString, function(err, validationErrors){
-    // err contains any technical error
-    // validationError is an array, null if the validation is ok
-  });
+var xsd = require('libxmljs2-xsd');
+  // throws in case of error
+  var schema = xsd.parseFile(schemaPath);
+  // throws in case of technical error, returns a list of validation errors, 
+  //   or null if the document is valid
+  var validationErrors = schema.validate(documentString);
 });
 ```
 
-Libxmljs integration
+libxmljs2 integration
 --------------------
 
-Node-libxml-xsd depends on [libxmljs](https://github.com/polotek/libxmljs/issues/226) that bundles libxml.
+libxmljs2-xsd depends on [libxmljs2](https://github.com/marudor/libxmljs2) that bundles libxml.
 
-The libxmljs module required by node-libxml-xsd is exposed as ```require('libxml-xsd').libxmljs```. This prevents depending on libxmljs twice which is not optimal and source of weird bugs.
+The libxmljs2 module required by node-libxml-xsd is exposed as ```require('libxmljs2-xsd').libxmljs```. This prevents depending on libxmljs2 twice which is not optimal and source of weird bugs.
 
-It is possible to work with libxmljs documents instead of strings as inputs to the *parse()* and *validate()* functions.
+It is possible to work with libxmljs2 documents instead of strings as inputs to the *parse()* and *validate()* functions.
 
 Imports and includes
 --------------------
@@ -48,35 +45,13 @@ XSD includes are supported but relative paths must be given from the execution d
 
 Includes are resolved when parsing the schema. Therefore the parsing task becomes IO bound, which is why you should not use synchronous parsing when you expect some includes.
 
-Sync or async
--------------
-
-The same *parse()* and *validate()* functions can be used in synchronous mode simply by removing the callback parameter.
-In this case if a technical error occurs it will be thrown and validation errors will be returned.
-
-```js
-var xsd = require('libxml-xsd');
-
-var schema = xsd.parse(schemaString);
-
-var validationErrors = schema.validate(documentString);
-
-```
-
-The asynchronous functions use the [libuv work queue](http://nikhilm.github.io/uvbook/threads.html#libuv-work-queue)
-to provide parallelized computation in node.js worker threads. This makes it non-blocking for the main event loop of node.js.
-
-Note that libxmljs parsing doesn't use the work queue, so only a part of the process is actually parallelized.
-
-The tasks being mostly CPU bound and very fast it is not a big problem to use synchronous mode.
-But remember that if you use some includes the parsing task becomes IO bound.
 
 Environment compatibility
 -------------------------
 
 For now 64bits linux and 32bits windows are confirmed. Other environments are probably ok, but not checked. Please report an issue if you encounter some difficulties.
 
-Node-libxml-xsd depends on [node-gyp](https://github.com/TooTallNate/node-gyp), you will need to meet its requirements. This can be a bit painful mostly for windows users. The node-gyp version bundled in your npm will have to be greater than 0.13.0, so you might have to follow [these instructions to upgrade](https://github.com/TooTallNate/node-gyp/wiki/Updating-npm's-bundled-node-gyp). There is no system dependancy otherwise as libxml is bundled by libxmljs.
+node-libxml-xsd depends on [node-gyp](https://github.com/TooTallNate/node-gyp), you will need to meet its requirements. This can be a bit painful mostly for windows users. The node-gyp version bundled in your npm will have to be greater than 0.13.0, so you might have to follow [these instructions to upgrade](https://github.com/TooTallNate/node-gyp/wiki/Updating-npm's-bundled-node-gyp). There is no system dependancy otherwise as libxml is bundled by libxmljs2.
 
 API Reference
 =============

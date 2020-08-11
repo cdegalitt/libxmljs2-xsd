@@ -7,7 +7,7 @@ using namespace v8;
 
 Nan::Persistent<Function> Schema::constructor;
 
-Schema::Schema(xmlSchemaPtr schemaPtr) : schema_obj(schemaPtr) {}
+Schema::Schema(v8::Local<v8::Context> context, xmlSchemaPtr schemaPtr) : schema_obj(schemaPtr) {}
 
 Schema::~Schema()
 {
@@ -16,20 +16,21 @@ Schema::~Schema()
     // already deleted by garbage collector and this results in segfaults
 }
 
-void Schema::Init(Handle<Object> exports) {
+void Schema::Init(Local<Object> exports, Local<Object> module, Local<Context> context) {
 	 // Prepare constructor template
     Local<FunctionTemplate> tpl = Nan::New<FunctionTemplate>();
     tpl->SetClassName(Nan::New<String>("Schema").ToLocalChecked());
   	tpl->InstanceTemplate()->SetInternalFieldCount(1);
   	
-    constructor.Reset(tpl->GetFunction());
+    constructor.Reset(tpl->GetFunction(context).ToLocalChecked());
 }
 
 // not called from node, private api
-Local<Object> Schema::New(xmlSchemaPtr schemaPtr) {
+Local<Object> Schema::New(Local<Context> context, xmlSchemaPtr schemaPtr) {
     Nan::EscapableHandleScope scope;
-    Local<Object> wrapper = Nan::New(constructor)->NewInstance();
-    Schema* schema = new Schema(schemaPtr);
+
+    Local<Object> wrapper = Nan::New(constructor)->NewInstance(context).ToLocalChecked();
+    Schema* schema = new Schema(context, schemaPtr);
     schema->Wrap(wrapper);
     return scope.Escape(wrapper);
 }

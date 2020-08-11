@@ -40,36 +40,11 @@ describe('node-libxml-xsd', function() {
 	});
 
 	describe('parseFile function', function() {
-		it('should parse a schema from a file', function(callback) {
-			xsd.parseFile('./test/resources/chapter04ord1.xsd', function(err, schema) {
-				schema.should.be.type('object');
-				callback(err);
-			});
+		it('should parse a schema from a file', function() {
+			schema = xsd.parseFile('./test/resources/chapter04ord1.xsd');
+			(schema).should.be.type('object');
 		});
 	});
-
-	describe('asynchronous parse function', function() {
-		it('should parse a schema from a libxmljs xml document', function(callback) {
-			var schemaDoc = libxmljs.parseXml(schemaSource);
-			xsd.parse(schemaDoc, function(err, schema) {
-				schema.should.be.type('object');
-				callback(err);
-			});
-		});
-		it('should parse a schema from a xml string', function(callback) {
-			xsd.parse(schemaSource, function(err, schema) {
-				schema.should.be.type('object');
-				callback(err);
-			});
-		});
-		it('should return an error when parsing invalid schema', function(callback) {
-			xsd.parse('this is not a schema!', function(err) {
-				should.exist(err);
-				callback();
-			});
-		});
-	});
-
 
 	describe('synchronous validate function', function() {
 		it('should validate a schema to a libxmljs xml document', function() {
@@ -93,45 +68,10 @@ describe('node-libxml-xsd', function() {
 		});
 	});
 
-
-	describe('asynchronous validate function', function() {
-		it('should validate a schema to a libxmljs xml document', function(callback) {
-			var doc = libxmljs.parseXml(docSource);
-			schema.validate(doc, function(err, validationErrors) {
-				should.not.exist(err);
-				should.not.exist(validationErrors);
-				callback();
-			});
-		});
-		it('should validate a schema to a xml string', function(callback) {
-			schema.validate(docSource, function(err, validationErrors) {
-				should.not.exist(err);
-				should.not.exist(validationErrors);
-				callback();
-			});
-		});
-		it('should return an error if given a bad xml', function(callback) {
-			schema.validate('this is not valid!', function(err, validationErrors) {
-				should.exist(err);
-				callback();
-			});
-		});
-		it('should return validation errors if content is good xml but not valid', function(callback) {
-			schema.validate('<test>this is not valid!<a></a></test>', function(err, validationErrors) {
-				should.not.exist(err);
-				validationErrors.should.have.lengthOf(1);
-				callback();
-			});
-		});
-	});
-
 	describe('validateFile function', function() {
-		it('should validate a schema to a xml file', function(callback) {
-			schema.validateFile('./test/resources/chapter04.xml', function(err, validationErrors) {
-				should.not.exist(err);
-				should.not.exist(validationErrors);
-				callback();
-			});
+		it('should validate a schema to a xml file', function() {
+			var validationErrors = schema.validateFile('./test/resources/chapter04.xml');
+			should.not.exist(validationErrors);
 		});
 	});
 

@@ -7,7 +7,7 @@
   "targets": [
     {
       "target_name": "node-libxml-xsd",
-      "sources": [ "src/schema.cc", "src/node_libxml_xsd.cc" ],
+      "sources": [ "src/schema.cc", "src/xml_errors.cc", "src/node_libxml_xsd.cc" ],
       "include_dirs": [
       	"<!(node -e \"require('nan')\")",
       	'<@(xmljs_include_dirs)'

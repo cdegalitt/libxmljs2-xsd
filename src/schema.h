@@ -7,12 +7,12 @@
 
 class Schema : public Nan::ObjectWrap {
 	public:
-	    static void Init(v8::Handle<v8::Object> exports);
-	    static v8::Local<v8::Object> New(xmlSchemaPtr schema);
+	    static void Init(v8::Local<v8::Object> exports, v8::Local<v8::Object> module, v8::Local<v8::Context> context);
+	    static v8::Local<v8::Object> New(v8::Local<v8::Context> context, xmlSchemaPtr schema);
 	    xmlSchemaPtr schema_obj;
 
 	private:
-	    explicit Schema(xmlSchemaPtr schema);
+	    explicit Schema(v8::Local<v8::Context> context, xmlSchemaPtr schema);
 	    ~Schema();
 	    static Nan::Persistent<v8::Function> constructor;
 };

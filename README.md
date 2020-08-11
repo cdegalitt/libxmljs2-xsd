@@ -1,45 +1,42 @@
 node-libxml-xsd
 ===============
 
-[![Build status](https://travis-ci.org/albanm/node-libxml-xsd.svg)](https://travis-ci.org/albanm/node-libxml-xsd)
-[![Code Climate](https://codeclimate.com/github/albanm/node-libxml-xsd/badges/gpa.svg)](https://codeclimate.com/github/albanm/node-libxml-xsd)
-[![NPM version](https://badge.fury.io/js/libxml-xsd.svg)](http://badge.fury.io/js/libxml-xsd)
+[![NPM version](https://badge.fury.io/js/libxmljs2-xsd.svg)](http://badge.fury.io/js/libxmljs2-xsd)
 
-*XSD validation for node.js using [libxml](http://xmlsoft.org/)*
+*XSD validation for node.js 14.x using [libxml](http://xmlsoft.org/) via [libxmljs2](https://github.com/marudor/libxmljs2)*
 
 Installation
 ------------
 
-	npm install libxml-xsd
+	npm install libxmljs2-xsd
 
 On windows there are several prerequisites that need to be met before an install will work.
 [Windows-Build-Tools](https://github.com/felixrieseberg/windows-build-tools) is a great helper module for this task.
 
     npm install --global --production windows-build-tools
-    npm install libxml-xsd
+    npm install libxmljs2-xsd
 
 Basic usage
 -----------
 
 ```js
-var xsd = require('libxml-xsd');
-
-xsd.parseFile(schemaPath, function(err, schema){
-  schema.validate(documentString, function(err, validationErrors){
-    // err contains any technical error
-    // validationError is an array, null if the validation is ok
-  });
+var xsd = require('libxmljs2-xsd');
+  // throws in case of error
+  var schema = xsd.parseFile(schemaPath);
+  // throws in case of technical error, returns a list of validation errors, 
+  //   or null if the document is valid
+  var validationErrors = schema.validate(documentString);
 });
 ```
 
-Libxmljs integration
+libxmljs2 integration
 --------------------
 
-Node-libxml-xsd depends on [libxmljs](https://github.com/polotek/libxmljs/issues/226) that bundles libxml.
+libxmljs2-xsd depends on [libxmljs2](https://github.com/marudor/libxmljs2) that bundles libxml.
 
-The libxmljs module required by node-libxml-xsd is exposed as ```require('libxml-xsd').libxmljs```. This prevents depending on libxmljs twice which is not optimal and source of weird bugs.
+The libxmljs2 module required by node-libxml-xsd is exposed as ```require('libxmljs2-xsd').libxmljs```. This prevents depending on libxmljs2 twice which is not optimal and source of weird bugs.
 
-It is possible to work with libxmljs documents instead of strings as inputs to the *parse()* and *validate()* functions.
+It is possible to work with libxmljs2 documents instead of strings as inputs to the *parse()* and *validate()* functions.
 
 Imports and includes
 --------------------
@@ -48,35 +45,13 @@ XSD includes are supported but relative paths must be given from the execution d
 
 Includes are resolved when parsing the schema. Therefore the parsing task becomes IO bound, which is why you should not use synchronous parsing when you expect some includes.
 
-Sync or async
--------------
-
-The same *parse()* and *validate()* functions can be used in synchronous mode simply by removing the callback parameter.
-In this case if a technical error occurs it will be thrown and validation errors will be returned.
-
-```js
-var xsd = require('libxml-xsd');
-
-var schema = xsd.parse(schemaString);
-
-var validationErrors = schema.validate(documentString);
-
-```
-
-The asynchronous functions use the [libuv work queue](http://nikhilm.github.io/uvbook/threads.html#libuv-work-queue)
-to provide parallelized computation in node.js worker threads. This makes it non-blocking for the main event loop of node.js.
-
-Note that libxmljs parsing doesn't use the work queue, so only a part of the process is actually parallelized.
-
-The tasks being mostly CPU bound and very fast it is not a big problem to use synchronous mode.
-But remember that if you use some includes the parsing task becomes IO bound.
 
 Environment compatibility
 -------------------------
 
 For now 64bits linux and 32bits windows are confirmed. Other environments are probably ok, but not checked. Please report an issue if you encounter some difficulties.
 
-Node-libxml-xsd depends on [node-gyp](https://github.com/TooTallNate/node-gyp), you will need to meet its requirements. This can be a bit painful mostly for windows users. The node-gyp version bundled in your npm will have to be greater than 0.13.0, so you might have to follow [these instructions to upgrade](https://github.com/TooTallNate/node-gyp/wiki/Updating-npm's-bundled-node-gyp). There is no system dependancy otherwise as libxml is bundled by libxmljs.
+node-libxml-xsd depends on [node-gyp](https://github.com/TooTallNate/node-gyp), you will need to meet its requirements. This can be a bit painful mostly for windows users. The node-gyp version bundled in your npm will have to be greater than 0.13.0, so you might have to follow [these instructions to upgrade](https://github.com/TooTallNate/node-gyp/wiki/Updating-npm's-bundled-node-gyp). There is no system dependancy otherwise as libxml is bundled by libxmljs2.
 
 API Reference
 =============
@@ -89,15 +64,13 @@ Node.js bindings for XSD validation from libxml
 * [libxml-xsd](#module_libxml-xsd)
     * _static_
         * [.libxmljs](#module_libxml-xsd.libxmljs)
-        * [.parse(source, [callback])](#module_libxml-xsd.parse) ⇒ <code>Schema</code>
-        * [.parseFile(sourcePath, callback)](#module_libxml-xsd.parseFile)
+        * [.parse(source)](#module_libxml-xsd.parse) ⇒
+        * [.parseFile(sourcePath)](#module_libxml-xsd.parseFile) ⇒
     * _inner_
         * [~Schema](#module_libxml-xsd..Schema)
             * [new Schema(schemaDoc, schemaObj)](#new_module_libxml-xsd..Schema_new)
-            * [.validate(source, [callback])](#module_libxml-xsd..Schema+validate) ⇒ <code>string</code> \| <code>Document</code>
-            * [.validateFile(sourcePath, callback)](#module_libxml-xsd..Schema+validateFile)
-        * [~parseCallback](#module_libxml-xsd..parseCallback) : <code>function</code>
-        * [~parseFileCallback](#module_libxml-xsd..parseFileCallback) : <code>function</code>
+            * [.validate(source)](#module_libxml-xsd..Schema+validate) ⇒
+            * [.validateFile(sourcePath)](#module_libxml-xsd..Schema+validateFile) ⇒
 
 <a name="module_libxml-xsd.libxmljs"></a>
 
@@ -107,30 +80,27 @@ The libxmljs module. Prevents the need for a user's code to require it a second 
 **Kind**: static property of [<code>libxml-xsd</code>](#module_libxml-xsd)  
 <a name="module_libxml-xsd.parse"></a>
 
-### libxml-xsd.parse(source, [callback]) ⇒ <code>Schema</code>
+### libxml-xsd.parse(source) ⇒
 Parse a XSD schema
 
-If no callback is given the function will run synchronously and return the result or throw an error.
-
 **Kind**: static method of [<code>libxml-xsd</code>](#module_libxml-xsd)  
-**Returns**: <code>Schema</code> - Only if no callback is given.  
+**Returns**: The parsed Schema  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | source | <code>string</code> \| <code>Document</code> | The content of the schema as a string or a [libxmljs document](https://github.com/polotek/libxmljs/wiki/Document) |
-| [callback] | <code>parseCallback</code> | The callback that handles the response. Expects err and Schema object. |
 
 <a name="module_libxml-xsd.parseFile"></a>
 
-### libxml-xsd.parseFile(sourcePath, callback)
+### libxml-xsd.parseFile(sourcePath) ⇒
 Parse a XSD schema
 
 **Kind**: static method of [<code>libxml-xsd</code>](#module_libxml-xsd)  
+**Returns**: The parsed Schema  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sourcePath | <code>stringPath</code> | The path of the file |
-| callback | <code>parseFileCallback</code> | The callback that handles the response. Expects err and Schema object. |
 
 <a name="module_libxml-xsd..Schema"></a>
 
@@ -139,8 +109,8 @@ Parse a XSD schema
 
 * [~Schema](#module_libxml-xsd..Schema)
     * [new Schema(schemaDoc, schemaObj)](#new_module_libxml-xsd..Schema_new)
-    * [.validate(source, [callback])](#module_libxml-xsd..Schema+validate) ⇒ <code>string</code> \| <code>Document</code>
-    * [.validateFile(sourcePath, callback)](#module_libxml-xsd..Schema+validateFile)
+    * [.validate(source)](#module_libxml-xsd..Schema+validate) ⇒
+    * [.validateFile(sourcePath)](#module_libxml-xsd..Schema+validateFile) ⇒
 
 <a name="new_module_libxml-xsd..Schema_new"></a>
 
@@ -158,54 +128,27 @@ if we don't store the schema doc it will be deleted by garbage collector and it 
 
 <a name="module_libxml-xsd..Schema+validate"></a>
 
-#### schema.validate(source, [callback]) ⇒ <code>string</code> \| <code>Document</code>
+#### schema.validate(source) ⇒
 Validate a XML document over a schema
 
-If no callback is given the function will run synchronously and return the result or throw an error.
-
 **Kind**: instance method of [<code>Schema</code>](#module_libxml-xsd..Schema)  
-**Returns**: <code>string</code> \| <code>Document</code> - Only if no callback is given. An array of validation errors, null if none.  
+**Returns**: An array of validation errors, or null if document is valid  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | source | <code>string</code> \| <code>Document</code> | The XML content to validate with the schema, to be given as a string or a [libxmljs document](https://github.com/polotek/libxmljs/wiki/Document) |
-| [callback] | [<code>validateCallback</code>](#Schema..validateCallback) | The callback that handles the response. Expects err and an array of validation errors, null if none. |
 
 <a name="module_libxml-xsd..Schema+validateFile"></a>
 
-#### schema.validateFile(sourcePath, callback)
+#### schema.validateFile(sourcePath) ⇒
 Apply a schema to a XML file
 
 **Kind**: instance method of [<code>Schema</code>](#module_libxml-xsd..Schema)  
+**Returns**: An array of validation errors, or null if document is valid  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sourcePath | <code>string</code> | The path of the file to read |
-| callback | [<code>validateFileCallback</code>](#Schema..validateFileCallback) | The callback that handles the response. Expects err and an array of validation errors null if none. |
-
-<a name="module_libxml-xsd..parseCallback"></a>
-
-### libxml-xsd~parseCallback : <code>function</code>
-Callback to the parse function
-
-**Kind**: inner typedef of [<code>libxml-xsd</code>](#module_libxml-xsd)  
-
-| Param | Type |
-| --- | --- |
-| [err] | <code>error</code> | 
-| [schema] | <code>Schema</code> | 
-
-<a name="module_libxml-xsd..parseFileCallback"></a>
-
-### libxml-xsd~parseFileCallback : <code>function</code>
-Callback to the parseFile function
-
-**Kind**: inner typedef of [<code>libxml-xsd</code>](#module_libxml-xsd)  
-
-| Param | Type |
-| --- | --- |
-| [err] | <code>error</code> | 
-| [schema] | <code>Schema</code> | 
 
 
 *documented by [jsdoc-to-markdown](https://github.com/75lb/jsdoc-to-markdown)*.
