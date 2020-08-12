@@ -1,6 +1,6 @@
 {
   "name": "libxmljs2-xsd",
-  "version": "0.26.1",
+  "version": "0.26.2",
   "description": "XSD validator based on libxmljs2",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,21 @@
     "validation",
     "libxml"
   ],
-  "author": "Alban Mouton <alban.mouton@gmail.com>",
-  "homepage": "https://github.com/albanm/node-libxml-xsd",
+  "author": "Christophe DELIQUAIRE <christophe.deliquaire@galitt.com>",
+  "contributors": [
+    {
+      "name": "Alban Mouton",
+      "email": "alban.mouton@gmail.com"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Christophe DELIQUAIRE",
+      "email": "christophe.deliquaire@galitt.com",
+      "web": "https://www.galitt.com"
+    }
+  ],
+  "homepage": "https://github.com/cdegalitt/libxmljs2-xsd",
   "bugs": {
     "url": "https://github.com/cdegalitt/libxmljs2-xsd/issues"
   },
