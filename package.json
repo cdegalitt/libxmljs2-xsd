@@ -1,6 +1,6 @@
 {
   "name": "libxmljs2-xsd",
-  "version": "0.26.0",
+  "version": "0.26.1",
   "description": "XSD validator based on libxmljs2",
   "main": "index.js",
   "scripts": {

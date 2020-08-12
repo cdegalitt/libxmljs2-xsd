@@ -21,7 +21,7 @@ void set_numeric_field(Local<Object> obj, const char *name, const int value) {
 }
 
 // Code copied from libxmljs. Should be kept in sync. Or dynamically linked to libxml node extension.
-Local<Object> BuildSyntaxError(xmlError *error) {
+Local<Value> BuildSyntaxError(xmlError *error) {
   Nan::EscapableHandleScope scope;
 
   Local<Value> err =
@@ -43,5 +43,6 @@ Local<Object> BuildSyntaxError(xmlError *error) {
   if (error->int1) {
     set_numeric_field(out, "int1", error->int1);
   }
-  return out;
+
+  return scope.Escape(err);
 }

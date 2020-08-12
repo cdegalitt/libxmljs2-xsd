@@ -80,8 +80,7 @@ NAN_METHOD(ValidateSync) {
     // will be empty if validation is ok
     Local<Array> errors = Array::New(isolate);
     for (unsigned int i = 0; i < errorsList.size(); i++ ) {
-      Local<Object> result = BuildSyntaxError(errorsList.at(i));
-      errors->Set(context, i, result);
+      errors->Set(context, i, BuildSyntaxError(errorsList.at(i)));
     }
     info.GetReturnValue().Set(errors);
 }

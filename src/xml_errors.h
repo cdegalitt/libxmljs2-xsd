@@ -6,6 +6,6 @@
 #include <node.h>
 #include <xml_syntax_error.h> // include from libxmljs
 
-v8::Local<v8::Object> BuildSyntaxError(xmlError *error);
+v8::Local<v8::Value> BuildSyntaxError(xmlError *error);
 
 #endif // SRC_XML_ERRORS_H_
