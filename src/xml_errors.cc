@@ -25,10 +25,10 @@ Local<Value> BuildSyntaxError(xmlError *error) {
   Nan::EscapableHandleScope scope;
 
   Local<Value> err =
-      Exception::Error(Nan::New<String>(error->message).ToLocalChecked());
+      Exception::Error(Nan::New<String>().ToLocalChecked());
   Local<Object> out = Local<Object>::Cast(err);
 
-  set_numeric_field(out, "domain", error->domain);
+  // set_numeric_field(out, "domain", error->domain);
   set_numeric_field(out, "code", error->code);
   set_string_field(out, "message", error->message);
   set_numeric_field(out, "level", error->level);
