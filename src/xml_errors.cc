@@ -24,11 +24,9 @@ void set_numeric_field(Local<Object> obj, const char *name, const int value) {
 Local<Value> BuildSyntaxError(xmlError *error) {
   Nan::EscapableHandleScope scope;
 
-  Local<Value> err =
-      Exception::Error(Nan::New<String>().ToLocalChecked());
-  Local<Object> out = Local<Object>::Cast(err);
+  Local<Object> out = Nan::New<Object>();
 
-  // set_numeric_field(out, "domain", error->domain);
+  set_numeric_field(out, "domain", error->domain);
   set_numeric_field(out, "code", error->code);
   set_string_field(out, "message", error->message);
   set_numeric_field(out, "level", error->level);
@@ -44,5 +42,5 @@ Local<Value> BuildSyntaxError(xmlError *error) {
     set_numeric_field(out, "int1", error->int1);
   }
 
-  return scope.Escape(err);
+  return scope.Escape(out);
 }
