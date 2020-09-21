@@ -28,6 +28,17 @@ var Schema = function(schemaDoc, schemaObj){
 };
 
 /**
+ * Parse XML
+ *
+ * @param {string} sourcePath - path to xml document
+ * @returns The parsed Schema
+ */
+exports.parseXml = function(sourcePath) {
+	var data = fs.readFileSync(sourcePath, 'utf8');
+	return libxmljs.parseXml(data);
+};
+
+/**
  * Parse a XSD schema
  *
  * @param {string|Document} source - The content of the schema as a string or a [libxmljs document]{@link https://github.com/polotek/libxmljs/wiki/Document}
