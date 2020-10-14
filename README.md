@@ -21,12 +21,11 @@ Basic usage
 
 ```js
 var xsd = require('libxmljs2-xsd');
-  // throws in case of error
-  var schema = xsd.parseFile(schemaPath);
-  // throws in case of technical error, returns a list of validation errors, 
-  //   or null if the document is valid
-  var validationErrors = schema.validate(documentString);
-});
+// throws in case of error
+var schema = xsd.parseFile(schemaPath);
+// throws in case of technical error, returns a list of validation errors, 
+// or null if the document is valid
+var validationErrors = schema.validate(documentString);
 ```
 
 libxmljs2 integration
