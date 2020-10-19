@@ -33,9 +33,9 @@ var Schema = function(schemaDoc, schemaObj){
  * @param {string} sourcePath - path to xml document
  * @returns The parsed Schema
  */
-exports.parseXml = function(sourcePath) {
+exports.parseXml = function(sourcePath, options) {
 	var data = fs.readFileSync(sourcePath, 'utf8');
-	return libxmljs.parseXml(data);
+	return libxmljs.parseXml(data, options);
 };
 
 /**
