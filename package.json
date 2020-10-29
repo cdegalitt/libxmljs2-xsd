@@ -1,5 +1,5 @@
 {
-  "name": "ksys-libxmljs2-xsd",
+  "name": "libxmljs2-xsd",
   "version": "1.27.1",
   "description": "XSD validator based on libxmljs2",
   "main": "index.js",

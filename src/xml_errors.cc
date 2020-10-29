@@ -5,27 +5,23 @@
 
 using namespace v8;
 
-void set_string_field(Local<Object> obj, const char *name, const char *value)
-{
+void set_string_field(Local<Object> obj, const char *name, const char *value) {
   Nan::HandleScope scope;
-  if (!value)
-  {
+  if (!value) {
     return;
   }
   Nan::Set(obj, Nan::New<String>(name).ToLocalChecked(),
            Nan::New<String>(value, strlen(value)).ToLocalChecked());
 }
 
-void set_numeric_field(Local<Object> obj, const char *name, const int value)
-{
+void set_numeric_field(Local<Object> obj, const char *name, const int value) {
   Nan::HandleScope scope;
   Nan::Set(obj, Nan::New<String>(name).ToLocalChecked(),
            Nan::New<Int32>(value));
 }
 
 // Code copied from libxmljs. Should be kept in sync. Or dynamically linked to libxml node extension.
-Local<Value> BuildSyntaxError(xmlError *error)
-{
+Local<Value> BuildSyntaxError(xmlError *error) {
   Nan::EscapableHandleScope scope;
 
   Local<Object> out = Nan::New<Object>();
@@ -42,8 +38,7 @@ Local<Value> BuildSyntaxError(xmlError *error)
   set_string_field(out, "str3", error->str3);
 
   // only add if we have something interesting
-  if (error->int1)
-  {
+  if (error->int1) {
     set_numeric_field(out, "int1", error->int1);
   }
 
