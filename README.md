@@ -40,7 +40,16 @@ It is possible to work with libxmljs2 documents instead of strings as inputs to 
 Imports and includes
 --------------------
 
-XSD includes are supported but relative paths must be given from the execution directory, usually the root of the project.
+XSD includes are supported either with relative paths from the execution directory, absolute paths, or paths relative to the baseUrl option value.
+
+```js
+var xsd = require('libxmljs2-xsd');
+// throws in case of error
+var schema = xsd.parseFile(schemaPath, { baseUrl: 'path/to/the/main/xsd/file' });
+// throws in case of technical error, returns a list of validation errors, 
+// or null if the document is valid
+var validationErrors = schema.validate(documentString);
+```
 
 Includes are resolved when parsing the schema. Therefore the parsing task becomes IO bound, which is why you should not use synchronous parsing when you expect some includes.
 
