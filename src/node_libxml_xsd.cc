@@ -70,7 +70,7 @@ NAN_METHOD(ValidateSync) {
     // Actual validation
     xmlSchemaValidCtxtPtr valid_ctxt = xmlSchemaNewValidCtxt(schema->schema_obj);
     if (valid_ctxt == NULL) {
-        delete doc;
+        xmlSchemaFreeValidCtxt(valid_ctxt);
         return Nan::ThrowError("Unable to create a validation context for the schema");
     }
     xmlSchemaValidateDoc(valid_ctxt, doc->xml_obj);
@@ -84,7 +84,7 @@ NAN_METHOD(ValidateSync) {
       errors->Set(context, i, BuildSyntaxError(errorsList.at(i)));
     }
     info.GetReturnValue().Set(errors);
-    delete doc;
+    xmlSchemaFreeValidCtxt(valid_ctxt);
 }
 
 // Compose the module by assigning the methods previously prepared
