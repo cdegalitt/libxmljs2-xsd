@@ -31,12 +31,13 @@ var Schema = function(schemaDoc, schemaObj){
  * Parse a XSD schema
  *
  * @param {string|Document} source - The content of the schema as a string or a [libxmljs document]{@link https://github.com/polotek/libxmljs/wiki/Document}
+ * @param {object} options - [The parsing options]{@link https://github.com/marudor/libxmljs2/blob/a61fdccf87a2928c084a3ec3e2a44f163998d81b/index.d.ts#L11}
  * @returns The parsed Schema
  */
-exports.parse = function(source) {
+exports.parse = function(source, options) {
 	// schema can be given as a string or a pre-parsed xml document
 	if (typeof source === 'string') {
-		source = libxmljs.parseXml(source);
+		source = libxmljs.parseXml(source, options);
 	}
 	return new Schema(source, binding.schemaSync(source));
 };
@@ -45,11 +46,12 @@ exports.parse = function(source) {
  * Parse a XSD schema
  *
  * @param {stringPath} sourcePath - The path of the file
+ * @param {object} options - [The parsing options]{@link https://github.com/marudor/libxmljs2/blob/a61fdccf87a2928c084a3ec3e2a44f163998d81b/index.d.ts#L11}
  * @returns The parsed Schema
  */
-exports.parseFile = function(sourcePath) {
+exports.parseFile = function(sourcePath, options) {
 	var data = fs.readFileSync(sourcePath, 'utf8');
-	return exports.parse(data.toString());
+	return exports.parse(data.toString(), options);
 };
 
 /**
