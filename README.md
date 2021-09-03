@@ -1,9 +1,10 @@
-node-libxml-xsd
+libxmljs2-xsd
 ===============
 
 [![NPM version](https://badge.fury.io/js/libxmljs2-xsd.svg)](http://badge.fury.io/js/libxmljs2-xsd)
 
-*XSD validation for node.js 14.x using [libxml](http://xmlsoft.org/) via [libxmljs2](https://github.com/marudor/libxmljs2)*
+*XSD 1.0 validation for node.js 14.x and 16.x using [libxml](http://xmlsoft.org/) via [libxmljs2](https://github.com/marudor/libxmljs2)*  
+As of now, XSD 1.1 is not supported, and the author does not actively work on it. Feel free to submit a PR if you want to.
 
 Installation
 ------------
@@ -21,11 +22,12 @@ Basic usage
 
 ```js
 var xsd = require('libxmljs2-xsd');
-// throws in case of error
-var schema = xsd.parseFile(schemaPath);
-// throws in case of technical error, returns a list of validation errors, 
-// or null if the document is valid
-var validationErrors = schema.validate(documentString);
+  // throws in case of error
+  var schema = xsd.parseFile(schemaPath);
+  // throws in case of technical error, returns a list of validation errors, 
+  //   or null if the document is valid
+  var validationErrors = schema.validate(documentString);
+});
 ```
 
 libxmljs2 integration
@@ -40,16 +42,7 @@ It is possible to work with libxmljs2 documents instead of strings as inputs to 
 Imports and includes
 --------------------
 
-XSD includes are supported either with relative paths from the execution directory, absolute paths, or paths relative to the baseUrl option value.
-
-```js
-var xsd = require('libxmljs2-xsd');
-// throws in case of error
-var schema = xsd.parseFile(schemaPath, { baseUrl: 'path/to/the/main/xsd/file' });
-// throws in case of technical error, returns a list of validation errors, 
-// or null if the document is valid
-var validationErrors = schema.validate(documentString);
-```
+XSD includes are supported but relative paths must be given from the execution directory, usually the root of the project.
 
 Includes are resolved when parsing the schema. Therefore the parsing task becomes IO bound, which is why you should not use synchronous parsing when you expect some includes.
 
@@ -72,8 +65,8 @@ Node.js bindings for XSD validation from libxml
 * [libxml-xsd](#module_libxml-xsd)
     * _static_
         * [.libxmljs](#module_libxml-xsd.libxmljs)
-        * [.parse(source)](#module_libxml-xsd.parse) ⇒
-        * [.parseFile(sourcePath)](#module_libxml-xsd.parseFile) ⇒
+        * [.parse(source, options)](#module_libxml-xsd.parse) ⇒
+        * [.parseFile(sourcePath, options)](#module_libxml-xsd.parseFile) ⇒
     * _inner_
         * [~Schema](#module_libxml-xsd..Schema)
             * [new Schema(schemaDoc, schemaObj)](#new_module_libxml-xsd..Schema_new)
@@ -88,7 +81,7 @@ The libxmljs module. Prevents the need for a user's code to require it a second 
 **Kind**: static property of [<code>libxml-xsd</code>](#module_libxml-xsd)  
 <a name="module_libxml-xsd.parse"></a>
 
-### libxml-xsd.parse(source) ⇒
+### libxml-xsd.parse(source, options) ⇒
 Parse a XSD schema
 
 **Kind**: static method of [<code>libxml-xsd</code>](#module_libxml-xsd)  
@@ -97,10 +90,11 @@ Parse a XSD schema
 | Param | Type | Description |
 | --- | --- | --- |
 | source | <code>string</code> \| <code>Document</code> | The content of the schema as a string or a [libxmljs document](https://github.com/polotek/libxmljs/wiki/Document) |
+| options | <code>object</code> | [The parsing options](https://github.com/marudor/libxmljs2/blob/a61fdccf87a2928c084a3ec3e2a44f163998d81b/index.d.ts#L11) |
 
 <a name="module_libxml-xsd.parseFile"></a>
 
-### libxml-xsd.parseFile(sourcePath) ⇒
+### libxml-xsd.parseFile(sourcePath, options) ⇒
 Parse a XSD schema
 
 **Kind**: static method of [<code>libxml-xsd</code>](#module_libxml-xsd)  
@@ -109,6 +103,7 @@ Parse a XSD schema
 | Param | Type | Description |
 | --- | --- | --- |
 | sourcePath | <code>stringPath</code> | The path of the file |
+| options | <code>object</code> | [The parsing options](https://github.com/marudor/libxmljs2/blob/a61fdccf87a2928c084a3ec3e2a44f163998d81b/index.d.ts#L11) |
 
 <a name="module_libxml-xsd..Schema"></a>
 
