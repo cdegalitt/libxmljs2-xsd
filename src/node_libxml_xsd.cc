@@ -70,7 +70,6 @@ NAN_METHOD(ValidateSync) {
     // Actual validation
     xmlSchemaValidCtxtPtr valid_ctxt = xmlSchemaNewValidCtxt(schema->schema_obj);
     if (valid_ctxt == NULL) {
-        xmlSchemaFreeValidCtxt(valid_ctxt);
         return Nan::ThrowError("Unable to create a validation context for the schema");
     }
     xmlSchemaValidateDoc(valid_ctxt, doc->xml_obj);
