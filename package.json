@@ -51,7 +51,7 @@
   "license": "MIT",
   "dependencies": {
     "bindings": "^1.2.1",
-    "libxmljs2": "^0.28.0",
+    "libxmljs2": "^0.30.1",
     "nan": "^2.14.1"
   },
   "devDependencies": {
