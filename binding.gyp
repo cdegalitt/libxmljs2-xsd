@@ -1,12 +1,12 @@
 {
   'variables': {
-    'target_arch%': 'ia32', # build for a 32-bit CPU by default
     'xmljs_include_dirs%': [],
     'xmljs_libraries%': [],
   },
   "targets": [
     {
       "target_name": "node-libxml-xsd",
+      "product_extension": "node",
       "sources": [ "src/schema.cc", "src/xml_errors.cc", "src/node_libxml_xsd.cc" ],
       "include_dirs": [
       	"<!(node -e \"require('nan')\")",
