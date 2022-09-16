@@ -5,7 +5,7 @@
   },
   "targets": [
     {
-      "target_name": "libxml-xsd",
+      "target_name": "node-libxml-xsd",
       "product_extension": "node",
       "sources": [ "src/schema.cc", "src/xml_errors.cc", "src/node_libxml_xsd.cc" ],
       "include_dirs": [
