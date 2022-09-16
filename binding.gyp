@@ -1,6 +1,5 @@
 {
   'variables': {
-    'target_arch%': 'ia32', # build for a 32-bit CPU by default
     'xmljs_include_dirs%': [],
     'xmljs_libraries%': [],
   },
