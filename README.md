@@ -118,10 +118,7 @@ Parse a XSD schema
 <a name="new_module_libxml-xsd..Schema_new"></a>
 
 #### new Schema(schemaDoc, schemaObj)
-A compiled schema. Do not call this constructor, instead use parse or parseFile.
-
-store both the source document and the parsed schema
-if we don't store the schema doc it will be deleted by garbage collector and it will result in segfaults.
+A compiled schema. Do not call this constructor, instead use parse or parseFile.store both the source document and the parsed schemaif we don't store the schema doc it will be deleted by garbage collector and it will result in segfaults.
 
 
 | Param | Type | Description |
