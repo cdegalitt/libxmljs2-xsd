@@ -3,7 +3,7 @@ libxmljs2-xsd
 
 [![NPM version](https://badge.fury.io/js/libxmljs2-xsd.svg)](http://badge.fury.io/js/libxmljs2-xsd)
 
-*XSD 1.0 validation for node.js 14.x and 16.x using [libxml](http://xmlsoft.org/) via [libxmljs2](https://github.com/marudor/libxmljs2)*  
+*XSD 1.0 validation for node.js 16.x, 18.x and 20.x using [libxml](http://xmlsoft.org/) via [libxmljs2](https://github.com/marudor/libxmljs2)*  
 As of now, XSD 1.1 is not supported, and the author does not actively work on it. Feel free to submit a PR if you want to.
 
 Installation
@@ -118,7 +118,10 @@ Parse a XSD schema
 <a name="new_module_libxml-xsd..Schema_new"></a>
 
 #### new Schema(schemaDoc, schemaObj)
-A compiled schema. Do not call this constructor, instead use parse or parseFile.store both the source document and the parsed schemaif we don't store the schema doc it will be deleted by garbage collector and it will result in segfaults.
+A compiled schema. Do not call this constructor, instead use parse or parseFile.
+
+store both the source document and the parsed schema
+if we don't store the schema doc it will be deleted by garbage collector and it will result in segfaults.
 
 
 | Param | Type | Description |
